@@ -43,12 +43,14 @@ $(document).ready(function() {
         var counter = 0;
     
         for(i = 0 ; i < answerAnswerd.length ; i++){
+            console.log(counter)
+
             if(answerAnswerd[1] == correctAnswers[i]){
                 counter++
             }
         }
 
-        $("#score-count").append(counter)
+        $("#score-count").text(counter);
 
     })
 });
