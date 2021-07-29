@@ -20,6 +20,46 @@ $(document).ready(function() {
         mainDiv.appendChild(thumbnail);
         mainDiv.appendChild(title);
 
+        mainDiv.addEventListener("click",function(){
+            var http = new XMLHttpRequest()
+
+            http.onreadystatechange = function(){
+                if(this.readyState === 4){
+                    var response = JSON.parse(this.responseText)
+
+                    var videoPlayer = document.getElementById("video-player")
+                    videoPlayer.src = 'https://player.vimeo.com/video/' + response.vimeoId
+                    
+                    var videoTitle = document.getElementById("video-title")
+                    videoTitle.innerHTML = response.title;
+
+                    var videoDescription = document.getElementById("video-description")
+                    videoDescription.innerHTML = response.description;
+
+                    var viewsCount = document.getElementById("views-count")
+                    viewsCount.innerHTML = response.views
+
+                }
+            }
+
+            http.open("GET","https://5d76bf96515d1a0014085cf9.mockapi.io/video/" + obj.id ,true)
+            http.send()
+        })
+
         return mainDiv;
     }
+
+    var playlistWrapper = $('#playlist-wrapper')
+
+
+
+    $.get("https://5d76bf96515d1a0014085cf9.mockapi.io/playlist",function(data,status){
+
+        for(i = 0 ;i < data.length ; i++){
+            playlistWrapper.append(createPlaylistCard(data[i]))
+            // console.log(data[i]);
+
+        }
+    })
+    
 });
